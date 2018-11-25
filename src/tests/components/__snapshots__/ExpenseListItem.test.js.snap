@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render ExpenseListItem with expense 1`] = `
+<div>
+  <Link
+    replace={false}
+    to="/edit/1"
+  >
+    <h3>
+      rent
+    </h3>
+  </Link>
+  <p>
+    $
+    1000
+     + time:
+    70/01/01 08:00:00
+  </p>
+</div>
+`;
+
+exports[`should render ExpenseListItem with expense 2`] = `
+<div>
+  <Link
+    replace={false}
+    to="/edit/2"
+  >
+    <h3>
+      coffee
+    </h3>
+  </Link>
+  <p>
+    $
+    5000
+     + time:
+    69/12/29 08:00:00
+  </p>
+</div>
+`;
+
+exports[`should render ExpenseListItem with expense 3`] = `
+<div>
+  <Link
+    replace={false}
+    to="/edit/3"
+  >
+    <h3>
+      dinner
+    </h3>
+  </Link>
+  <p>
+    $
+    3000
+     + time:
+    70/01/04 08:00:00
+  </p>
+</div>
+`;

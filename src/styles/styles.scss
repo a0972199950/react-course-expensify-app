@@ -1,0 +1,8 @@
+// scss的附加檔案(partials)檔名必須在最前面加上底線，
+// 但import它時則須拿掉底線，並且可不寫副檔名
+@import "./base/setting";
+@import "./base/base";
+
+.is-active{
+    font-weight: bold;
+}
