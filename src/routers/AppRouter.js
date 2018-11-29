@@ -20,7 +20,7 @@ const AppRouter = () => (
             <Switch>
                 {/*path的值預設為使用"開頭為"來配對，因此若要改成"完全符合"，則必須多傳入一個exact參數並設成true*/}
                 <Route path="/" component={ExpenseDashboardPage} exact />
-                <Route path="/creat" component={AddExpensePage} />
+                <Route path="/create" component={AddExpensePage} />
                 <Route path="/edit/:id" component={EditExpensePage} />
                 <Route path="/help" component={HelpPage} />
                 {/* path是選填的，若沒定義path則所有頁面都會match */}

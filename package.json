@@ -4,9 +4,12 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "webpack",
+    "build:dev": "webpack",
+    "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server --open",
-    "test": "jest --config=jest.config.json"
+    "test": "jest --config=jest.config.json",
+    "start": "node server/server.js",
+    "heroku-postbuild": "npm run build:prod"
   },
   "keywords": [],
   "author": "",
@@ -24,8 +27,10 @@
     "enzyme": "^3.0.0",
     "enzyme-adapter-react-16": "^1.0.0",
     "enzyme-to-json": "^3.3.4",
+    "express": "^4.16.4",
     "jest": "^23.6.0",
     "live-server": "^1.2.0",
+    "mini-css-extract-plugin": "^0.4.5",
     "moment": "^2.22.2",
     "node-sass": "^4.9.4",
     "normalize.css": "^8.0.0",
