@@ -38,7 +38,7 @@ module.exports = (env) => {
         plugins: [
             CSSExtract
         ],
-        devtool: isProduction ? "source-map" : "inline-source-map",
+        devtool: isProduction ? "source-map" : "cheap-module-eval-source-map",
         devServer: {
             contentBase: path.join(__dirname, "public"),
             // 若瀏覽器尋找頁面時收到404，則強制載入首頁

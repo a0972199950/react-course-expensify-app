@@ -16,9 +16,9 @@ exports[`should render Header 1`] = `
   <NavLink
     activeClassName="is-active"
     aria-current="page"
-    to="/creat"
+    to="/create"
   >
-    Creat Page
+    Create Page
   </NavLink>
   <NavLink
     activeClassName="is-active"

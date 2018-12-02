@@ -11,10 +11,10 @@ exports[`should render ExpenseListItem with expense 1`] = `
     </h3>
   </Link>
   <p>
-    $
-    1000
-     + time:
-    70/01/01 08:00:00
+    TWD 
+    $1,000
+    -
+    1970/01/01 08:00:00
   </p>
 </div>
 `;
@@ -30,10 +30,10 @@ exports[`should render ExpenseListItem with expense 2`] = `
     </h3>
   </Link>
   <p>
-    $
-    5000
-     + time:
-    69/12/29 08:00:00
+    TWD 
+    $5,000
+    -
+    1969/12/29 08:00:00
   </p>
 </div>
 `;
@@ -49,10 +49,10 @@ exports[`should render ExpenseListItem with expense 3`] = `
     </h3>
   </Link>
   <p>
-    $
-    3000
-     + time:
-    70/01/04 08:00:00
+    TWD 
+    $3,000
+    -
+    1970/01/04 08:00:00
   </p>
 </div>
 `;
