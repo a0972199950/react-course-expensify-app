@@ -13,15 +13,10 @@ import "normalize.css/normalize.css";
 // webpack就知道要用scss-loader把scss轉換成css後加進HTML的<style>裡
 import "./styles/styles.scss";
 import 'react-dates/lib/css/_datepicker.css';
-
-
-import {addExpense, removeExpense, editExpense} from "./actions/expenses";
-import {setTextFilter, sortByAmount, sortByDate, setStartDate, setEndDate} from "./actions/filters";
-import getVisibleExpenses from "./selectors/expenses";
 import configureStore from "./store/ConfigureStore";
 
 const store = configureStore();
-console.log("test");
+
 const jsx = (
     <Provider store={store}>
         <AppRouter />
