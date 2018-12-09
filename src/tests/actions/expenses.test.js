@@ -1,11 +1,20 @@
 import configureStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import { startAddExpense, addExpense, editExpense, removeExpense } from "../../actions/expenses";
+import { startAddExpense, addExpense, editExpense, removeExpense, setExpenses, startSetExpenses } from "../../actions/expenses";
 import expenses from "../fixtures/expense";
 import database from "../../firebase/firebase";
 
 const middleware = [ thunk ];
 const createMockStore = configureStore(middleware);
+
+beforeEach((done) => {
+    const expensesData = {};
+    expenses.forEach(({id, description, amount, createdAt, note}) => {
+        expensesData[id] = {description, amount, createdAt, note};
+    });
+
+    database.ref("expenses").set(expensesData).then(() => done());
+})
 
 test("shoule setup remove expense action object", () => {
     const result = removeExpense("abc123");
@@ -107,17 +116,43 @@ test("should add expense with default to database and store", (done) => {
     });
 });
 
-// test("should setup add expense action object with default data", () => {
-//     const result = addExpense();
 
-//     expect(result).toEqual({
-//         type: "ADD_EXPENSE",
-//         expense: {
-//             description: "",
-//             amount: 0,
-//             createdAt: 0,
-//             note: "",
-//             id: expect.any(String)
-//         }
-//     })
-// });
+test("should setup set expenses action object with data", () => {
+    const action = setExpenses(expenses);
+
+    expect(action).toEqual({
+        type: "SET_EXPENSES",
+        expenses
+    });
+});
+
+
+test("should fatch expenses from database and dispatch to redux", (done) => {
+    const initialState = [];
+    const store = createMockStore(initialState);
+
+    store.dispatch(startSetExpenses()).then(() => {
+        const actions = store.getActions();
+
+        expect(actions[0]).toEqual({
+            type: "SET_EXPENSES",
+            expenses
+        });
+
+        return database.ref("expenses").once("value");
+
+    }).then((snapshot) => {
+        const dataArray = [];
+
+        snapshot.forEach((childSnapshot) => {
+            dataArray.push({
+                id: childSnapshot.key,
+                ...childSnapshot.val()
+            });
+        });
+
+        expect(dataArray).toEqual(expenses);
+
+        done();
+    });
+});

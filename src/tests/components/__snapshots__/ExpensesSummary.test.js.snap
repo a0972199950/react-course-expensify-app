@@ -2,22 +2,24 @@
 
 exports[`should render count and total with multiple expenses 1`] = `
 <div>
-  <p>
+  <h1>
     Viewing 
-    3
-     expenses totalling 
-    $9,000
-  </p>
+     
+    expenses
+     totalling 
+    $0
+  </h1>
 </div>
 `;
 
 exports[`should render count and total with single expense 1`] = `
 <div>
-  <p>
+  <h1>
     Viewing 
-    1
-     expenses totalling 
-    $1,000
-  </p>
+     
+    expenses
+     totalling 
+    $0
+  </h1>
 </div>
 `;

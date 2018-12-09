@@ -66,11 +66,41 @@ export const startEditExpense = (id, updates) => {
                 ...updates
             })
             .then(() => {
-                console.log("update succeed");
                 dispatch(editExpense(id, updates));
             })
             .catch((e) => {
                 console.log("update failed", e);
             });
     }
-}
+};
+
+
+// 將從database拿到的資料寫到redux裡面
+export const setExpenses = (expenses) => {
+    return {
+        type: "SET_EXPENSES",
+        expenses
+    }
+};
+
+
+// 從database獲取既存的資料
+export const startSetExpenses = () => {
+    return (dispatch) => {
+        return database.ref("expenses").once("value").then((snapshot) => {
+            const expensesArray = [];
+
+            snapshot.forEach((childSnapshot) => {
+                expensesArray.push({
+                    id: childSnapshot.key,
+                    ...childSnapshot.val()
+                });
+            });
+
+            dispatch(setExpenses(expensesArray));
+
+        }).catch((e) => {
+            console.log("fatch data from database failed", e);
+        });
+    };
+};

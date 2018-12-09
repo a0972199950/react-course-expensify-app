@@ -4,7 +4,9 @@ import AppRouter from "./routers/AppRouter";
 // Provider是react-redux庫提供的一個虛擬的最上層組件
 // 他用來包住所有自創的組件，並且可以傳入redux的store(store = {store})
 // 一旦傳入後，裡面的子組件就可以在需要store的時候使用connect()來連接redux store
-import {Provider} from "react-redux";
+import { Provider } from "react-redux";
+import { startSetExpenses } from "./actions/expenses";
+
 // normalize.css是一長串某人寫好的，用來初始化所有瀏覽器預設樣式設定的css
 import "normalize.css/normalize.css";
 // 下方的import並非js code，而是scss code，
@@ -24,7 +26,12 @@ const jsx = (
     </Provider>
 );
 
-ReactDOM.render(jsx, document.getElementById("app"));
+ReactDOM.render(<p>Loading...</p>, document.getElementById("app"));
+
+store.dispatch(startSetExpenses()).then(() => {
+    ReactDOM.render(jsx, document.getElementById("app"));
+})
+
 
 
 

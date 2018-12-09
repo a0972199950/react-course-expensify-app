@@ -84,4 +84,26 @@ test("should not edit expense if id not found", () => {
     const state = expensesReducer(expenses, action);
 
     expect(state).toEqual(expenses);
+});
+
+
+test("should setup all expenses from database to state", () => {
+    const existingState = [
+        {
+            id: 5,
+            description: "default description",
+            amount: 0,
+            createdAt: 0,
+            note: "default note"
+        }
+    ];
+
+    const action = {
+        type: "SET_EXPENSES",
+        expenses
+    };
+
+    const state = expensesReducer(existingState, action);
+
+    expect(state).toEqual(expenses);
 })
