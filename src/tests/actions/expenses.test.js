@@ -1,6 +1,6 @@
 import configureStore from "redux-mock-store";
 import thunk from "redux-thunk";
-import { startAddExpense, addExpense, editExpense, removeExpense, setExpenses, startSetExpenses } from "../../actions/expenses";
+import { addExpense, startAddExpense, removeExpense, startRemoveExpense, editExpense, startEditExpense, setExpenses, startSetExpenses } from "../../actions/expenses";
 import expenses from "../fixtures/expense";
 import database from "../../firebase/firebase";
 
@@ -27,6 +27,34 @@ test("shoule setup remove expense action object", () => {
     });
 });
 
+
+test("should remove expenses from firebase", (done) => {
+    const initialState = {};
+    const store = createMockStore(initialState);
+
+    const id = expenses[0].id;
+
+    store.dispatch(startRemoveExpense(id)).then(() => {
+        const actions = store.getActions();
+
+        expect(actions[0]).toEqual({
+            type: "REMOVE_EXPENSE",
+            id
+        });
+
+        database.ref("expenses/" + id).once("value").then((snapshot) => {
+            const dataHadBeenRemove = snapshot.val();
+
+            // expect().toBeFalsy()用來檢查前面的值是否為undefined/null/false/"" ...
+            // 若在.ref()地位到一個不存在的位址並使用once()叫出snapshot的話，該snapshot的.val()會回傳null
+            expect(dataHadBeenRemove).toBeFalsy();
+
+            done();
+        });
+    });
+});
+
+
 test("should setup edit expense action object", () => {
     const result = editExpense("abc123", { note: "new note", description: "new description" });
 
@@ -39,6 +67,44 @@ test("should setup edit expense action object", () => {
         }        
     });
 });
+
+
+test("should edit expense from firebase", (done) => {
+    const initialState = {};
+    const store = createMockStore(initialState);
+
+    const id = expenses[0].id;
+    const updates = {
+        description: "editted content for test suitcase",
+        amount: 87076677
+    };
+
+    store.dispatch(startEditExpense(id, updates)).then(() => {
+        const actions = store.getActions();
+
+        expect(actions[0]).toEqual({
+            type: "EDIT_EXPENSE",
+            id,
+            updates
+        });
+
+        return database.ref("expenses/" + id).once("value");
+        
+    }).then((snapshot) => {
+        const expenseDataObj = {
+            id: snapshot.key,
+            ...snapshot.val()
+        };
+
+        expect(expenseDataObj).toEqual({
+            ...expenses[0],
+            ...updates
+        });
+
+        done();
+    });
+});
+
 
 test("should setup add expense action object with provided data", () => {
     

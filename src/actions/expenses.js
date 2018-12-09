@@ -36,19 +36,18 @@ export const removeExpense = (id = undefined) => ({
 
 export const startRemoveExpense = (id = undefined) => {
     return (dispatch) => {
-        database
+        return database
             .ref("expenses/" + id)
             .remove()
             .then(() => {
-                console.log("remove succeed");
                 dispatch(removeExpense(id));
             })
             .catch((e) => {
                 console.log("remove failed", e);
             });
 
-    }
-}
+    };
+};
 
 
 export const editExpense = (id, updates) => ({
@@ -60,18 +59,16 @@ export const editExpense = (id, updates) => ({
 
 export const startEditExpense = (id, updates) => {
     return (dispatch) => {
-        database
+        return database
             .ref("expenses/" + id)
-            .update({
-                ...updates
-            })
+            .update(updates)
             .then(() => {
                 dispatch(editExpense(id, updates));
             })
             .catch((e) => {
                 console.log("update failed", e);
             });
-    }
+    };
 };
 
 
