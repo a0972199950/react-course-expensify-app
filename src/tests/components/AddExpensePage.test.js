@@ -4,13 +4,13 @@ import { AddExpensePage } from "../../components/AddExpensePage";
 import expenses from "../fixtures/expense";
 
 // beforeEach(fn())是一個life cycle function，會在執行每個test()之前執行一次
-let addExpense, history, wrapper;
+let startAddExpense, history, wrapper;
 beforeEach(() => {
-    addExpense = jest.fn();
+    startAddExpense = jest.fn();
     history = {
         push: jest.fn()
     };
-    wrapper = shallow(<AddExpensePage addExpense={addExpense} history={history} />);
+    wrapper = shallow(<AddExpensePage startAddExpense={startAddExpense} history={history} />);
 });
 
 test("should render AddExpensePage", () => {
@@ -21,6 +21,6 @@ test("should render AddExpensePage", () => {
 test("should handle submit", () => {   
     wrapper.find("ExpenseForm").prop("onSubmit")(expenses[1]);
 
-    expect(addExpense).toHaveBeenLastCalledWith(expenses[1]);
+    expect(startAddExpense).toHaveBeenLastCalledWith(expenses[1]);
     expect(history.push).toHaveBeenLastCalledWith("/");
 });
