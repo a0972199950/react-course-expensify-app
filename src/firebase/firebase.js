@@ -9,11 +9,15 @@ const config = {
     messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID
 };
 
+console.log(process.env.FIREBASE_API_KEY);
+
 firebase.initializeApp(config);
 
 // firebase module裡面包含非常多的功能模組，例如authtication或datebase,
 // 我們可以透過firebase物件下的第二層成員來選擇要使用哪個模組的功能
 const database = firebase.database();
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+const facebookAuthProvider = new firebase.auth.FacebookAuthProvider();
 
 
 
@@ -31,7 +35,7 @@ const database = firebase.database();
 
 
 
-export {firebase, database as default};
+export {firebase, googleAuthProvider, facebookAuthProvider, database as default};
 
 // const expenses = [
 //     {
