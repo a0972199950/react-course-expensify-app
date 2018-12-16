@@ -8,7 +8,9 @@ export const addExpense = (expense) => ({
 export const startAddExpense = (expenseData = {}) => {
     // 藉由在store裡面傳入redux-thunk，我們可以讓action不要return一個object，而是return一個函數進去store
     // redux-thunk會把dispatch傳進我們return的函數作為第一個參數來讓我們使用
-    return (dispatch) => {
+    // 同上，redux-thunk還會把函數getState當作第二個參數傳給我們。呼叫getState即可取得目前的state
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
         // 解構expenseData
         const {description = "", note = "", amount = 0, createdAt = 0} = expenseData;
         const expense = { description, note, amount, createdAt };
@@ -16,7 +18,7 @@ export const startAddExpense = (expenseData = {}) => {
         // 這邊的return會return一個Promise，是為了給tests用的
         // 之後會在tests裡面再對上面的Promise連接.then()
         return database
-            .ref("expenses")
+            .ref(`users/${uid}/expenses`)
             .push(expense)
             .then((ref) => {
                 dispatch(addExpense({
@@ -35,9 +37,11 @@ export const removeExpense = (id = undefined) => ({
 
 
 export const startRemoveExpense = (id = undefined) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+
         return database
-            .ref("expenses/" + id)
+            .ref(`users/${uid}/expenses/${id}`)
             .remove()
             .then(() => {
                 dispatch(removeExpense(id));
@@ -58,9 +62,11 @@ export const editExpense = (id, updates) => ({
 
 
 export const startEditExpense = (id, updates) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+
         return database
-            .ref("expenses/" + id)
+            .ref(`users/${uid}/expenses/${id}`)
             .update(updates)
             .then(() => {
                 dispatch(editExpense(id, updates));
@@ -83,8 +89,10 @@ export const setExpenses = (expenses) => {
 
 // 從database獲取既存的資料
 export const startSetExpenses = () => {
-    return (dispatch) => {
-        return database.ref("expenses").once("value").then((snapshot) => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+
+        return database.ref(`users/${uid}/expenses`).once("value").then((snapshot) => {
             const expensesArray = [];
 
             snapshot.forEach((childSnapshot) => {

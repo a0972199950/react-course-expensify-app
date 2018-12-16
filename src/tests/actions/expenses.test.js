@@ -7,13 +7,18 @@ import database from "../../firebase/firebase";
 const middleware = [ thunk ];
 const createMockStore = configureStore(middleware);
 
+const uid = "thisisthetestuid";
+const initialState = {
+    auth: { uid }
+};
+
 beforeEach((done) => {
     const expensesData = {};
     expenses.forEach(({id, description, amount, createdAt, note}) => {
         expensesData[id] = {description, amount, createdAt, note};
     });
 
-    database.ref("expenses").set(expensesData).then(() => done());
+    database.ref(`users/${uid}/expenses`).set(expensesData).then(() => done());
 })
 
 test("shoule setup remove expense action object", () => {
@@ -29,7 +34,6 @@ test("shoule setup remove expense action object", () => {
 
 
 test("should remove expenses from firebase", (done) => {
-    const initialState = {};
     const store = createMockStore(initialState);
 
     const id = expenses[0].id;
@@ -42,7 +46,7 @@ test("should remove expenses from firebase", (done) => {
             id
         });
 
-        database.ref("expenses/" + id).once("value").then((snapshot) => {
+        database.ref(`users/${uid}/expenses/${id}`).once("value").then((snapshot) => {
             const dataHadBeenRemove = snapshot.val();
 
             // expect().toBeFalsy()用來檢查前面的值是否為undefined/null/false/"" ...
@@ -70,7 +74,6 @@ test("should setup edit expense action object", () => {
 
 
 test("should edit expense from firebase", (done) => {
-    const initialState = {};
     const store = createMockStore(initialState);
 
     const id = expenses[0].id;
@@ -88,7 +91,7 @@ test("should edit expense from firebase", (done) => {
             updates
         });
 
-        return database.ref("expenses/" + id).once("value");
+        return database.ref(`users/${uid}/expenses/${id}`).once("value");
         
     }).then((snapshot) => {
         const expenseDataObj = {
@@ -122,7 +125,6 @@ test("should setup add expense action object with provided data", () => {
 // 因此，若要強制讓test()等待內部工作完成再判斷通過與否的話，需要在test()第二個參數的函數裡傳入done
 // done也是一個函數，當有傳入done時，test()會等待你實際執行done()時才判斷測試通過與否
 test("should add expense to database and store", (done) => {
-    const initialState = {};
     const store = createMockStore(initialState);
 
     const expense = {
@@ -146,7 +148,7 @@ test("should add expense to database and store", (done) => {
         });
 
         // 藉由在一號Promise的.then()裡面回傳二號Promise，就可以把二號Promise的resolve()的內容當成參數傳給一號Promise的下一個.then()
-        return database.ref("expenses/" + actions[0].expense.id).once("value");
+        return database.ref(`users/${uid}/expenses/${actions[0].expense.id}`).once("value");
     }).then((snapshot) => {
         expect(snapshot.val()).toEqual(expense);
         done();
@@ -154,7 +156,6 @@ test("should add expense to database and store", (done) => {
 });
 
 test("should add expense with default to database and store", (done) => {
-    const initialState = {};
     const store = createMockStore(initialState);
 
     const defaultExpense = {
@@ -175,7 +176,7 @@ test("should add expense with default to database and store", (done) => {
             }
         });
 
-        return database.ref("expenses/" + actions[0].expense.id).once("value");
+        return database.ref(`users/${uid}/expenses/${actions[0].expense.id}`).once("value");
     }).then((snapshot) => {
         expect(snapshot.val()).toEqual(defaultExpense);
         done();
@@ -194,7 +195,6 @@ test("should setup set expenses action object with data", () => {
 
 
 test("should fatch expenses from database and dispatch to redux", (done) => {
-    const initialState = [];
     const store = createMockStore(initialState);
 
     store.dispatch(startSetExpenses()).then(() => {
@@ -205,7 +205,7 @@ test("should fatch expenses from database and dispatch to redux", (done) => {
             expenses
         });
 
-        return database.ref("expenses").once("value");
+        return database.ref(`users/${uid}/expenses`).once("value");
 
     }).then((snapshot) => {
         const dataArray = [];

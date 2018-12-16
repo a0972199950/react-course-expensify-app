@@ -10,9 +10,9 @@ import LoginPage from "../components/LoginPage";
 import ExpenseDashboardPage from "../components/ExpenseDashboardPage";
 import AddExpensePage from "../components/AddExpensePage";
 import EditExpensePage from "../components/EditExpensePage";
-import HelpPage from "../components/HelpPage";
 import NotFoundPage from "../components/NotFoundPage";
 
+import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 
 export const history = createHistory();
@@ -25,11 +25,10 @@ const AppRouter = () => (
             {/* 這樣就可以藉由在最後面放一個always match的route來製作404 page */}
             <Switch>
                 {/*path的值預設為使用"開頭為"來配對，因此若要改成"完全符合"，則必須多傳入一個exact參數並設成true*/}
-                <Route path="/" component={LoginPage} exact />
+                <PublicRoute path="/" component={LoginPage} exact />
                 <PrivateRoute path="/dashboard" component={ExpenseDashboardPage} />
                 <PrivateRoute path="/create" component={AddExpensePage} />
                 <PrivateRoute path="/edit/:id" component={EditExpensePage} />
-                <PrivateRoute path="/help" component={HelpPage} />
                 {/* path是選填的，若沒定義path則所有頁面都會match */}
                 <Route component={NotFoundPage}/>
             </Switch>
