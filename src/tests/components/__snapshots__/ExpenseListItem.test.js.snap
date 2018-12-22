@@ -1,58 +1,82 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`should render ExpenseListItem with expense 1`] = `
-<div>
-  <Link
-    replace={false}
-    to="/edit/1"
-  >
-    <h3>
+<Link
+  className="list-item"
+  replace={false}
+  to="/edit/1"
+>
+  <div>
+    <h3
+      className="list-item__title"
+    >
       rent
     </h3>
-  </Link>
-  <p>
+    <span
+      className="list-item__sub-title"
+    >
+      1970/01/01 08:00:00
+    </span>
+  </div>
+  <h3
+    className="list-item__data"
+  >
     TWD 
     $1,000
-    -
-    1970/01/01 08:00:00
-  </p>
-</div>
+  </h3>
+</Link>
 `;
 
 exports[`should render ExpenseListItem with expense 2`] = `
-<div>
-  <Link
-    replace={false}
-    to="/edit/2"
-  >
-    <h3>
+<Link
+  className="list-item"
+  replace={false}
+  to="/edit/2"
+>
+  <div>
+    <h3
+      className="list-item__title"
+    >
       coffee
     </h3>
-  </Link>
-  <p>
+    <span
+      className="list-item__sub-title"
+    >
+      1969/12/29 08:00:00
+    </span>
+  </div>
+  <h3
+    className="list-item__data"
+  >
     TWD 
     $5,000
-    -
-    1969/12/29 08:00:00
-  </p>
-</div>
+  </h3>
+</Link>
 `;
 
 exports[`should render ExpenseListItem with expense 3`] = `
-<div>
-  <Link
-    replace={false}
-    to="/edit/3"
-  >
-    <h3>
+<Link
+  className="list-item"
+  replace={false}
+  to="/edit/3"
+>
+  <div>
+    <h3
+      className="list-item__title"
+    >
       dinner
     </h3>
-  </Link>
-  <p>
+    <span
+      className="list-item__sub-title"
+    >
+      1970/01/04 08:00:00
+    </span>
+  </div>
+  <h3
+    className="list-item__data"
+  >
     TWD 
     $3,000
-    -
-    1970/01/04 08:00:00
-  </p>
-</div>
+  </h3>
+</Link>
 `;

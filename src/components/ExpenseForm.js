@@ -59,46 +59,49 @@ export default class ExpenseForm extends React.Component{
     }
 
     render(){
-        return (
-            <div>
-                {this.state.error && <p>{this.state.error}</p>}
-                <form onSubmit={this.onSubmit}>
-                    <input 
-                        type="text"
-                        value={this.state.description}
-                        placeholder="description"
-                        onChange={this.onDescriptionChange}
-                        // autoFocus的作用是讓網頁剛進入時就FOCUS在某個input上面，
-                        // 這樣user就不用再把游標移過去
-                        autoFocus
-                    />
+        return (                
+            <form className="form" onSubmit={this.onSubmit}>
+                {this.state.error && <p className="form__error">{this.state.error}</p>}
+                <input 
+                    type="text"
+                    className="text-input"
+                    value={this.state.description}
+                    placeholder="description"
+                    onChange={this.onDescriptionChange}
+                    // autoFocus的作用是讓網頁剛進入時就FOCUS在某個input上面，
+                    // 這樣user就不用再把游標移過去
+                    autoFocus
+                />
 
-                    <input 
-                        type="text"
-                        placeholder="amount"
-                        value={this.state.amount}
-                        onChange={this.onAmountChange}
-                    />
+                <input 
+                    type="text"
+                    className="text-input"
+                    placeholder="amount"
+                    value={this.state.amount}
+                    onChange={this.onAmountChange}
+                />
 
-                    <SingleDatePicker 
-                        date={this.state.createdAt}
-                        onDateChange={this.onDateChange}
-                        focused={this.state.calendarFocused}
-                        onFocusChange={this.onFocusChange}
-                        numberOfMonths={1}
-                        isOutsideRange={() => false}
-                    />
+                <SingleDatePicker 
+                    date={this.state.createdAt}
+                    onDateChange={this.onDateChange}
+                    focused={this.state.calendarFocused}
+                    onFocusChange={this.onFocusChange}
+                    numberOfMonths={1}
+                    isOutsideRange={() => false}
+                />
 
-                    <textarea
-                        placeholder="note(optional)"
-                        value={this.state.note}
-                        onChange={this.onNoteChange}
-                    >
-                    </textarea>
+                <textarea
+                    className="textarea"
+                    placeholder="note(optional)"
+                    value={this.state.note}
+                    onChange={this.onNoteChange}
+                >
+                </textarea>
 
-                    <button>{this.props.expenseToEdit ? "Edit Expense" : "Add Expense"}</button>
-                </form>
-            </div>
+                <div>
+                    <button className="button">{this.props.expenseToEdit ? "Edit Expense" : "Add Expense"}</button>
+                </div>
+            </form>
         );        
     }
 }

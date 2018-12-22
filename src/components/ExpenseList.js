@@ -4,15 +4,25 @@ import ExpenseListItem from "./ExpenseListItem";
 import selectExpenses from "../selectors/expenses";
 
 export const ExpenseList = (props) => (
-    <div>
-        {props.expenses.length > 0 ? (
-            props.expenses.map((expense) => (
-                <ExpenseListItem key={expense.id} {...expense} />
-            ))
-        ) : (
-            <p>No expenses exist.</p>
-        )}
-        {}
+    <div className="content-container">
+        <div className="list-header">
+            <div className="show-for-mobile">Expenses</div>
+            <div className="show-for-desktop">Expense</div>
+            <div className="show-for-desktop">amount</div>
+        </div>
+        
+        <div>
+            {props.expenses.length > 0 ? (
+                props.expenses.map((expense) => (
+                    <ExpenseListItem key={expense.id} {...expense} />
+                ))
+            ) : (
+                <div className="list-item list-item--message">
+                    <span>No expenses</span>
+                </div>                
+            )}
+        </div>
+        
     </div>
 );
 
