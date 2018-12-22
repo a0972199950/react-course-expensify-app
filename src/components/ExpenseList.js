@@ -11,7 +11,7 @@ export const ExpenseList = (props) => (
             <div className="show-for-desktop">amount</div>
         </div>
         
-        <div>
+        <div className="list-body">
             {props.expenses.length > 0 ? (
                 props.expenses.map((expense) => (
                     <ExpenseListItem key={expense.id} {...expense} />
